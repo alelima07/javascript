@@ -4,11 +4,11 @@ let booksItems = books.getAll();
 
 
 http.createServer((req, res) => {
-    const path = request.url.toLowerCase();
+    const path = req.url.toLowerCase();
     switch(path) {
         
     case '/':
-      const homePage = `Welcome! \n This is my first node app. I imported an array of books that has a length of ${booksItems.length}`;
+     const homePage = `Welcome! \n This is my first node app. I imported an array of books that has a length of ${booksItems.length}`;
       res.writeHead(200, {'Content-Type': 'text/plain'});
       res.end(`${homePage}`);
       break;
@@ -26,5 +26,5 @@ http.createServer((req, res) => {
     }
 }).listen(process.env.PORT || 3000);
             
-    }
+
     
