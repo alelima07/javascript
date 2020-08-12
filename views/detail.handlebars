@@ -1,0 +1,29 @@
+{{!--  
+ Alessandra Lima
+ Course: IT122  (Week 2 - Express Yourself)
+ File: detail.handlebars
+ Desc: Display details of the books array  --}}
+
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <title>Library</title>
+       
+    </head>
+    <body>
+        <h1>Details for {{title}}:</h1>
+
+        <ul>
+<!--             display additional details of the books passed from index.js -->
+                <li>Book: {{details.title}}</li>
+                <li>Author: {{details.author}}</li>
+                <li>Year: {{details.year}}</li>
+                <li>Ranking: {{details.ranking}}</li>
+        </ul>
+
+        <a href="/">Back to the library</a> <!-- link to homepage -->
+    </body>
+</html>

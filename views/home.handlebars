@@ -1,0 +1,27 @@
+{{!--  
+ Alessandra Lima
+ Course: IT122  (Week 2 - Express Yourself)
+ File: home.handlebars
+ Desc: Display each item in the data books array as a link to a detail page  --}}
+
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <title>Library</title>
+
+    </head>
+    <body>
+        <h1>Welcome!</h1>
+        <h2>Take a look at the books we currently have available!</h2>
+        <ul>
+            <!-- loop through each item in the array and display the books -->
+            {{#each selectBook}}
+                <li><a href="detail?book={{title}}">{{author}} {{title}}</a></li> 
+            {{/each}}    
+        </ul>
+
+    </body>
+</html>
