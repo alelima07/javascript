@@ -1,5 +1,5 @@
 // Alessandra Souza Lima
-// Course: IT122  (Week 2 - Express Yourself)
+// Course: IT122 - Seattle Central College
 // File: index.js
 
 'use strict'
@@ -16,7 +16,6 @@ app.use(bodyParser.urlencoded({extended: true})); // parse form submissions
 app.engine('handlebars', exphbs({defaultLayout: false}));
 app.set("view engine", "handlebars");
 
-/* Is it really selectBookItems? */
 const selectBookItems = selectBook.getAll(); // get all of the books items
 
 // view homepage
