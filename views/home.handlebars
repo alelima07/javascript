@@ -18,7 +18,7 @@
         <h2>Take a look at the books we currently have available!</h2>
         <ul>
             <!-- loop through each item in the array and display the books -->
-            {{#each selectBook}}
+            {{#each books}}
                 <li><a href="detail?book={{title}}">{{author}} {{title}}</a></li> 
             {{/each}}    
         </ul>
