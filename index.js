@@ -37,10 +37,10 @@ app.get('/', (req, res, next) => {
 
  // view detail route - display the details of the books from mongodb
   app.get('/detail', (req, res) => {
-  const model = req.query.model; //query the book that was clicked on
-  books.findOne({model: model}).lean()
+  const title = req.query.title; //query the book that was clicked on
+  books.findOne({title: title}).lean()
       .then((books) => {
-      res.render('detail', {model: model, details: books});
+      res.render('detail', {title: title, details: books});
       console.log(books);
   })
   .catch(err => next(err));
