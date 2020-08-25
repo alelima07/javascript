@@ -8,8 +8,6 @@ const credentials = require("../models/credentials")
 
 // remote db connection settings. For security, connectionString should be in a separate file not committed to git
 
-const connectionString = 'mongodb+srv://alelima07:91254422@javascript2.iopfm.mongodb.net/sccprojects?retryWrites=true&w=majority';
-
 mongoose.connect(credentials.connectionString, { dbName: 'sccprojects', useNewUrlParser: true, useUnifiedTopology: true }); 
 
 mongoose.connection.on('open', () => {

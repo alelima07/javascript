@@ -6,11 +6,14 @@
 
 const express = require("express");
 const exphbs = require('express-handlebars');
-const bodyParser = require("body-parser")
+const bodyParser = require("body-parser");
 const app = express();
 const selectBook = require('./data.js'); // reference the information in the data.js file
 
 app.set('port', process.env.PORT || 3000);
+
+
+
 app.use(express.static(__dirname + '/public')); // set location for static files
 app.use(bodyParser.urlencoded({extended: true})); // parse form submissions
 
@@ -63,6 +66,7 @@ app.get('/delete', (req, res) => {
     .catch(err => next(err));
 }); 
  
+
  // view about page
  app.get('/about', (req, res) => {
   const aboutMe = `About Me: \n My name is Alessandra Lima and I am a full time student at Seattle Central studying Programming.`;
