@@ -10,6 +10,11 @@ const credentials = require("../models/credentials")
 
 mongoose.connect(credentials.connectionString, { dbName: 'sccprojects', useNewUrlParser: true, useUnifiedTopology: true }); 
 
+//Week 5
+//Required mongobd/mongoose setting for using findOneAndDelete and findOneAndUpdate
+mongoose.set('useFindAndModify', false);
+
+
 mongoose.connection.on('open', () => {
   console.log('Mongoose connected.');
 });
@@ -17,8 +22,7 @@ mongoose.connection.on('open', () => {
 // define books model in JSON key/value pairs
 // values indicate the data type of each key
 const mySchema = mongoose.Schema({
- books: { type: String, required: true },
- title: String,
+ title: { type: String, required: true },
  author: String,
  year: String,
  ranking: String
