@@ -48,7 +48,7 @@ app.get('/', (req, res, next) => {
   return books.find({}).lean()
     .then((books) => {
     res.render('home', { books});
-    //res.render('home', {books: JSON.stringify(books)});
+    //res.render('home-react', {books: JSON.stringify(books)});
       console.log(books);
   })
     .catch(err => next(err));
