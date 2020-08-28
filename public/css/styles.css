@@ -1,0 +1,193 @@
+
+/* General Styles */
+
+body {
+    overflow: unset;
+    background-color: #3c99dc;
+}
+.wrapper {
+    
+    width: 70%;
+    height: 200%;
+    margin: 0 auto;
+    
+}
+
+h1 {
+    margin: 0 auto;
+    text-align: center;
+    color: whitesmoke;
+    }
+
+h2, h3 {
+    margin-left: .5em;
+    color: whitesmoke;
+    }
+
+.mainlist {
+    float: left;
+    width: 50%;
+}
+
+ul {
+    padding-inline-start: 10px;
+}
+
+li {
+    font-size: 1.75em;
+    width: 80%;
+    margin: .5em 0em;
+    padding: .25em .5em;
+    list-style: none;
+    border: 1px solid black;
+    border-radius: 20px;
+    background-color: azure;
+    }
+
+a:link {
+    text-decoration: none;
+    }
+    
+a:visited {
+    text-decoration: none;
+    }
+    
+a:hover {
+    text-decoration: underline;
+    }
+    
+a:active {
+    text-decoration: underline;
+    }
+
+/* Details page specific styles */
+.sidebar {
+    width: 45%;
+    float: right;
+    position: -webkit-sticky;
+    position: sticky;
+    top: 0;
+    margin-right: .5em;
+    background-color: rgb(101, 115, 175);
+        padding: .5em 0em;
+        border: solid 1px;
+        border-radius: 30px;
+        
+}
+
+.conf {
+    color: red;
+}
+
+/* FORM ELEMENTS */
+label {
+    font-size: .8em;
+    width: 30%;
+    margin: 1em .5em .5em .5em;
+    padding: .25em .5em;
+    list-style: none;
+    /*border: 1px solid black;
+    border-radius: 20px;
+    background-color: lightgray; 
+    */ 
+}
+
+input {
+    margin: 0em 1em .5em 1em;
+    padding: .25em .5em;
+    border-radius: 20px;
+    width: 85%;
+    font-size: 1.25em;
+
+}
+
+.btn {
+    margin: .5em auto;
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: space-around;
+    width: 75%;
+}
+
+button {
+    font-weight: bold;
+    margin: .5em;
+    border-radius: 20px;
+    padding: .25em .5em;
+    background-color: skyblue;
+    text-decoration: none;
+
+}
+
+button:hover {
+    background-color: rgb(107, 159, 192);
+}
+
+button:focus {
+    outline:none;
+}
+
+/* REPSPONSIVE STYLES */
+
+@media screen and (max-width: 700px) {
+    .wrapper {
+        width: 100%;
+        
+    }
+
+    h2, h3 {
+        margin: .5em auto;
+        text-align: center;
+    }
+
+    .mainlist {
+        width:95%;
+    }
+
+    li {
+        font-size: 1.75em;
+        width: 80%;
+        margin: .5em auto;
+    }
+    .sidebar {
+        width: 95%;
+        margin: 0 auto;
+        float: none;
+    }
+
+    label {
+        font-size: 1em;
+    }
+
+    input {
+        margin: 0em 1em .5em 1em;
+        padding: .25em .5em;
+        border-radius: 20px;
+        width: 90%;
+        font-size: 1em;
+    }
+}
+
+@media screen and (max-width: 465px) {
+    .btn {
+        display: flex;
+        flex-direction: column;
+    }
+
+    button {
+        margin: .5em auto;
+        width: 60%;
+    }
+}
+/*  OLD classNames when details were displayed on separate page
+.stats {
+    font-size: 1.5em;
+    }
+
+.home {
+    margin: .5em;
+    padding-top: 2em;
+    font-size: 1.5em;
+    }
+
+*/

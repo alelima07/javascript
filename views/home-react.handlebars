@@ -1,0 +1,99 @@
+<html>
+ <head>
+     <title>React App Demo</title>
+     
+     <title>Library</title>
+     <link rel="stylesheet" type="text/css" href="./css/styles.css" />
+ </head>
+
+ <body>
+
+ <div id="root"></div>
+     <script src="https://unpkg.com/react@16/umd/react.development.js"></script>
+     <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
+     <!-- Don't use this in production: -->
+     <script src="https://unpkg.com/babel-standalone@6.15.0/babel.min.js"></script>
+     <script type="text/babel">
+
+ class App extends React.Component{
+       constructor(props){
+           super(props);
+           // Set initial state using data from server application
+           this.state = {
+             book: {{{ books }}}, //provided from index.js for '/' path. 
+             currentBook: { } // current selected item
+           };
+
+           // bind application state to click handler
+           this.selectItem = this.selectItem.bind(this);
+        }
+        
+        /* Handle list item clicked */
+       selectItem(event) {
+         event.preventDefault();
+         const book = this.state.book.find(book => event.target.text === book.title);
+         this.setState({currentBook: book});
+         }
+         
+         /* Reset currentBook function created to return currentBook to its original empty state */ 
+       resetCurrent() {
+           this.setState({currentBook: { } })
+       }
+
+       render() {         
+            if (Object.entries(this.state.currentBook).length !== 0 ) {
+                return (
+                    <div>
+                    <h1>Welcome to the Library!</h1>
+                    <BookDetails current={this.state.currentBook} reset={() => this.resetCurrent()} />
+                    </div>
+             );
+            } else {
+                return (
+                    <div>
+                    <h1>Welcome to the Library!</h1> 
+                    <h2>Select a book to learn more:</h2>
+                    <Book bookArray={this.state.book} selected={event => this.selectItem(event)}/>
+                    </div>
+           );
+           }
+       } 
+    }
+      
+
+/*Books component */
+
+const Book = props => {  
+         return (
+             <div>
+                 <ul>
+                 {props.bookArray.map((book) => (
+                     <li key={book._id}><a href="#" onClick={props.selected}>{book.title}</a></li>
+                 ))}
+                 </ul>   
+             </div>
+         ); 
+     };
+     
+/* BooksDetails Component*/
+
+const BookDetails = props => {
+         return (
+             <div>
+                 <h2>{props.current.title}</h2>               
+                 <ul>
+                     <li className="stats">Author: {props.current.author}</li>
+                     <li className="stats">Release Year: {props.current.year}</li>
+                     <li className="stats">Ranking: {props.current.ranking}</li>
+                 </ul>
+                 <p className="home"><a href="#" onClick={props.reset} >Return to List</a></p>
+             </div>
+         )
+     }
+     
+    
+     ReactDOM.render(<App />, document.getElementById('root'));
+     
+ </script>
+ </body>
+ </html> 

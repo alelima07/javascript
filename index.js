@@ -47,8 +47,8 @@ app.use('/api', require('cors')());
 app.get('/', (req, res, next) => {
   return books.find({}).lean()
     .then((books) => {
-    res.render('home', { books});
-    //res.render('home-react', {books: JSON.stringify(books)});
+    //res.render('home', { books});
+    res.render('home-react', {books: JSON.stringify(books)});
       console.log(books);
   })
     .catch(err => next(err));
@@ -68,11 +68,7 @@ app.get('/api/books', (req, res) => {
 
  // view detail route - display the details of the books from mongodb
   app.get('/detail', (req, res) => {
-<<<<<<< HEAD
-  const title = req.query.title; 
-=======
   const title = req.query.title; //query the book that was clicked on
->>>>>>> d0360ca12c6188e2ea15cbc0df7f3c707e5444f4
   books.findOne({title: title}).lean()
       .then((books) => {
       res.render('detail', {title: title, details: books});
