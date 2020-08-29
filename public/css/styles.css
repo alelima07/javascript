@@ -1,9 +1,8 @@
-
 /* General Styles */
 
 body {
     overflow: unset;
-    background-color: #3c99dc;
+    background-color: #b3e5fc;
 }
 .wrapper {
     
@@ -16,10 +15,16 @@ body {
 h1 {
     margin: 0 auto;
     text-align: center;
-    color: whitesmoke;
+    color: black;
     }
 
-h2, h3 {
+h2 {
+    margin-left: .5em;
+    color: black;
+    }
+
+
+h3 {
     margin-left: .5em;
     color: whitesmoke;
     }
@@ -68,7 +73,7 @@ a:active {
     position: sticky;
     top: 0;
     margin-right: .5em;
-    background-color: rgb(101, 115, 175);
+    background-color: #4fc3f7;
         padding: .5em 0em;
         border: solid 1px;
         border-radius: 30px;
@@ -76,7 +81,7 @@ a:active {
 }
 
 .conf {
-    color: red;
+    color: black;
 }
 
 /* FORM ELEMENTS */

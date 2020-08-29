@@ -14,58 +14,42 @@
      <!-- Don't use this in production: -->
      <script src="https://unpkg.com/babel-standalone@6.15.0/babel.min.js"></script>
      <script type="text/babel">
+     
+     
+    /* BooksDetails Component*/
 
- class App extends React.Component{
-       constructor(props){
-           super(props);
-           // Set initial state using data from server application
-           this.state = {
-             book: {{{ books }}}, //provided from index.js for '/' path. 
-             currentBook: { } // current selected item
-           };
-
-           // bind application state to click handler
-           this.selectItem = this.selectItem.bind(this);
-        }
-        
-        /* Handle list item clicked */
-       selectItem(event) {
-         event.preventDefault();
-         const book = this.state.book.find(book => event.target.text === book.title);
-         this.setState({currentBook: book});
-         }
-         
-         /* Reset currentBook function created to return currentBook to its original empty state */ 
-       resetCurrent() {
-           this.setState({currentBook: { } })
-       }
-
-       render() {         
-            if (Object.entries(this.state.currentBook).length !== 0 ) {
-                return (
-                    <div>
-                    <h1>Welcome to the Library!</h1>
-                    <BookDetails current={this.state.currentBook} reset={() => this.resetCurrent()} />
-                    </div>
-             );
-            } else {
-                return (
-                    <div>
-                    <h1>Welcome to the Library!</h1> 
-                    <h2>Select a book to learn more:</h2>
-                    <Book bookArray={this.state.book} selected={event => this.selectItem(event)}/>
-                    </div>
-           );
-           }
-       } 
+const BookDetails = props => {
+         return (
+            <div className="sidebar">
+                <h2>Details for {props.current.title || "selected book:"}</h2>               
+               
+                <form>
+                    <label>Title:</label><br/>
+                    <input onChange={props.edit} type="text" name= "title" value={props.current.title || ""}  /><br/>
+                    <label>Author:</label><br/>
+                    <input onChange={props.edit} type="text" name= "author" value={props.current.author || ""}  /><br/>
+                    <label>Year:</label><br/>
+                    <input onChange={props.edit} type="text" name= "year" value={props.current.year || ""}  /><br/>
+                    <label>Ranking:</label><br/>
+                    <input  onChange={props.edit} type="text" name= "ranking" value={props.current.ranking || ""} />
+                </form>
+                <div className="btn">
+                <button onClick={props.reset}>Clear Fields</button>
+                <button onClick={props.delete}>Delete Book</button>
+                <button onClick={props.save}>Save Entry</button>
+                </div>
+                <div id="status"></div>
+            </div>
+        )
     }
-      
+
 
 /*Books component */
 
 const Book = props => {  
          return (
-             <div>
+             <div className="mainlist">
+                <h2>Select a book to learn more:</h2>
                  <ul>
                  {props.bookArray.map((book) => (
                      <li key={book._id}><a href="#" onClick={props.selected}>{book.title}</a></li>
@@ -75,21 +59,119 @@ const Book = props => {
          ); 
      };
      
-/* BooksDetails Component*/
 
-const BookDetails = props => {
-         return (
-             <div>
-                 <h2>{props.current.title}</h2>               
-                 <ul>
-                     <li className="stats">Author: {props.current.author}</li>
-                     <li className="stats">Release Year: {props.current.year}</li>
-                     <li className="stats">Ranking: {props.current.ranking}</li>
-                 </ul>
-                 <p className="home"><a href="#" onClick={props.reset} >Return to List</a></p>
-             </div>
-         )
-     }
+
+
+ class App extends React.Component{
+       constructor(props){
+           super(props);
+           this.state = {
+             book: {{{ books }}}, 
+             currentBook: { } 
+           };
+
+           // bind application state to click handler
+           this.selectItem = this.selectItem.bind(this);
+           this.resetCurrent = this.resetCurrent.bind(this);
+           this.handleEdit = this.handleEdit.bind(this);
+           this.handleDelete = this.handleDelete.bind(this);
+           this.handleSave = this.handleSave.bind(this);
+        }
+        
+        /* Handle list item clicked */
+       selectItem(event) {
+         event.preventDefault();
+         const book = this.state.book.find(book => event.target.text === book.title);
+         this.setState({currentBook: book});
+         ReactDOM.render(<h2></h2>, document.getElementById('status'));
+         }
+         
+          handleEdit (event) {
+        let newBook = this.state.currentBook;
+        newBook[event.target.name] = event.target.value;
+        this.setState({currentBook: newBook});
+        
+    }
+// DELETE BOOK FUNCTION
+    handleDelete () {
+      console.log('delete it');
+      fetch(`/api/books/delete/${this.state.currentBook.title}`)
+        .then((response) => {
+          console.log(response);
+          return response.json();
+        })
+        .then((result) => {
+      
+          this.setState({ book: [...this.state.book.filter(book => book.title !==this.state.currentBook.title)] });
+          
+// Display message indicating indicated book was deleted
+          ReactDOM.render(<h2 className="conf">"{this.state.currentBook.title}" deleted!</h2>, document.getElementById('status'));
+          this.resetCurrent();
+        })
+        .catch(err => console.log(err))
+    }
+// SAVE NEW BOOK FUNCTION
+    handleSave (event) {
+      //console.log("Save me!");
+      const newBook = this.state.currentBook;
+      
+      newBook[event.target.name] = event.target.value;
+      fetch(`/api/books/add`, {
+        method: "POST",
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(newBook)
+      })
+      .then((response) => response.json())
+ 
+
+// Create Array from this.state.book and push result of save to new Array.
+
+      .then(result => {
+        if (result.upserted) {
+          const newBook = this.state.currentBook;
+          newBook._id = result.upserted._id;
+          const newArrayOfBooks = this.state.book.map(book => {
+          
+          return book;
+          })
+          newArrayOfBooks.push(newBook);
+          this.setState({ book : newArrayOfBooks});
+        }
+    
+// Display message indicating new book was saved
+          ReactDOM.render(<h2 className="conf">"{this.state.currentBook.title}" added!</h2>, document.getElementById('status'));
+          this.resetCurrent();
+      })
+      .catch((err) => console.log(err))
+    }
+
+
+         /* Reset currentBook function created to return currentBook to its original empty state */ 
+       resetCurrent() {
+           this.setState({currentBook: { } })
+           
+       }
+
+       render() {         
+            
+                return (
+                    <div id="display" className="wrapper">
+                    <h1>Welcome to the Library!</h1>
+                    
+                    <BookDetails
+                current={this.state.currentBook}
+                reset={() => this.resetCurrent()}
+                edit={this.handleEdit}
+                delete={this.handleDelete}
+                save={this.handleSave}
+            />
+            <Book bookArray={this.state.book} selected={event => this.selectItem(event)}/>
+          </div>
+          );
+      }
+    }
+    
+      
      
     
      ReactDOM.render(<App />, document.getElementById('root'));

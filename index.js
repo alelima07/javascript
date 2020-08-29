@@ -79,9 +79,6 @@ app.get('/api/books', (req, res) => {
      
 
 // GET SINGLE ITEM - API
- /*
- Get API route for a single item, provided in url params. If movie title not found, returns 400 error saying desired movie wasn't found. Else, movie info is returned in JSON format. Returns 500 Status error if movies cannot be retrieved. 
- */
  app.get('/api/books/:title', (req, res) => {
      const title = req.params.title; 
      books.findOne({title: title})
@@ -110,10 +107,7 @@ app.get('/delete', (req, res) => {
  
 
 // DELETE SINGLE ITEM - API
- /*
- Delete API route for a single book item, provided in url params. If requested book is not in db, returns 400 error saying desired book wasn't found. Else, removed book info is returned in JSON format. Returns 500 Status error if books cannot be retrieved.
- */
- app.delete('/api/books/:title', (req, res) => {
+ app.get('/api/books/delete/:title', (req, res) => {
      const title = req.params.title; 
      books.findOneAndDelete({title: title})
      .then(book => {
@@ -129,12 +123,11 @@ app.get('/delete', (req, res) => {
  })
 
  // UPDATE/ADD SINGLE ITEM - API
- /*
- Post API route for adding a single book item or updating existing book, provided in url params. Creates a new book in the db if no documents match the provided title url parameter. If there is a match, will update with info passed in the body, and won't create a duplicate. Returns the updated book document in JSON format. Otherwise, Returns 500 Status error if books cannot be retrieved.
- */
- app.post('/api/books/:title', (req, res) => {
-     const title = req.params.title;
-     books.findOneAndUpdate({title: title}, req.body, {upsert: true, new: true})
+ 
+ app.post('/api/books/add', (req, res) => {
+     //const title = req.params.title;
+     delete req.body["_id"];
+     books.updateOne({title: req.body.title}, req.body, {upsert: true, new: true})
      .then(book => {
          res.json(book)
      })
